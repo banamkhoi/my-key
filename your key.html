@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Key - BOMAYYEUVIETNAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-bg {
+            background: linear-gradient(-45deg, #090d16, #1e1b4b, #2e1065, #0369a1);
+            background-size: 400% 400%;
+            animation: gradientMove 12s ease infinite;
+        }
+    </style>
+</head>
+<body class="animate-bg text-white min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+
+    <!-- Đốm sáng nền -->
+    <div class="absolute top-1/3 left-1/3 w-80 h-80 bg-pink-500/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-1/3 right-1/3 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Card Chính -->
+    <div class="relative z-10 bg-slate-900/80 backdrop-blur-xl rounded-3xl p-8 max-w-md w-full text-center border border-indigo-500/30 shadow-[0_0_50px_rgba(168,85,247,0.25)]">
+        
+        <!-- Header -->
+        <h1 class="text-3xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-pink-400 to-indigo-400 mb-2">
+            YOUR KEY READY
+        </h1>
+        <p class="text-xs text-slate-400 mb-1">Sao chép key bên dưới để kích hoạt ứng dụng</p>
+        
+        <!-- Tag VIP -->
+        <div class="inline-block px-3 py-1 bg-amber-500/10 border border-amber-500/30 rounded-full my-3">
+            <span class="text-xs font-bold text-amber-300 flex items-center gap-1">
+                ⚡ KEY 1 LẦN VĨNH VIỄN ⚡
+            </span>
+        </div>
+
+        <!-- Khung chứa Key -->
+        <div class="my-5 relative group">
+            <input type="text" id="keyInput" readonly value="Đang tải Key..." 
+                class="w-full bg-slate-950/90 border-2 border-indigo-500/40 focus:border-indigo-400 rounded-2xl px-4 py-3.5 text-center text-indigo-200 font-mono text-xs font-bold tracking-widest break-all focus:outline-none shadow-inner">
+        </div>
+
+        <!-- Button Copy -->
+        <button onclick="copyKey()" id="copyBtn"
+            class="group relative w-full overflow-hidden rounded-2xl p-px font-bold text-white shadow-2xl transition-all duration-300 hover:scale-[1.02] active:scale-95">
+            <span id="btnBg" class="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transition-all duration-300"></span>
+            <span id="btnText" class="relative flex items-center justify-center gap-2 rounded-[15px] bg-slate-950/80 px-6 py-3.5 text-base backdrop-blur-md transition-all duration-300 group-hover:bg-transparent">
+                📋 COPY KEY
+            </span>
+        </button>
+
+        <!-- Thông báo -->
+        <p id="statusMsg" class="text-sm text-emerald-400 font-semibold mt-4 hidden animate-bounce">
+            ✨ Đã sao chép key thành công!
+        </p>
+    </div>
+
+    <script>
+        function generateRandomHex(length) {
+            const characters = '0123456789ABCDEF';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+        function loadOrCreateKey() {
+            // Kiểm tra xem trình duyệt đã lưu Key trước đó chưa
+            let savedKey = localStorage.getItem('user_bmynv_key');
+
+            // Nếu chưa có, tạo Key mới và lưu lại
+            if (!savedKey) {
+                const randomSuffix = generateRandomHex(48);
+                savedKey = `BOMAYYEUVIETNAM_${randomSuffix}`;
+                localStorage.setItem('user_bmynv_key', savedKey);
+            }
+
+            // Gán Key vào ô hiển thị
+            document.getElementById('keyInput').value = savedKey;
+        }
+
+        // Tự động kiểm tra / tải Key khi load trang
+        window.onload = loadOrCreateKey;
+
+        function copyKey() {
+            const keyInput = document.getElementById('keyInput');
+            const btnText = document.getElementById('btnText');
+            const btnBg = document.getElementById('btnBg');
+            const statusMsg = document.getElementById('statusMsg');
+
+            keyInput.select();
+            keyInput.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(keyInput.value);
+
+            btnText.innerText = "✓ ĐÃ SAO CHÉP!";
+            btnBg.className = "absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-500";
+            statusMsg.classList.remove('hidden');
+
+            setTimeout(() => {
+                btnText.innerText = "📋 COPY KEY";
+                btnBg.className = "absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500";
+                statusMsg.classList.add('hidden');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

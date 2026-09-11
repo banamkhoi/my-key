@@ -14,7 +14,7 @@
         .animate-bg {
             background: linear-gradient(-45deg, #090d16, #1e1b4b, #2e1065, #0369a1);
             background-size: 400% 400%;
-            animation: gradientMove 12s ease infinite;p
+            animation: gradientMove 12s ease infinite;
         }
     </style>
 </head>
@@ -40,9 +40,9 @@
             </span>
         </div>
 
-        <!-- Khung chứa Key -->
+        <!-- Khung chứa Key Mặc Định -->
         <div class="my-5 relative group">
-            <input type="text" id="keyInput" readonly value="testkey" 
+            <input type="text" id="keyInput" readonly value="BOMAYYEUVIETNAM_392DF0CABCFDAD20F5314B8E09F0D7015AC71FF4FA14FD60" 
                 class="w-full bg-slate-950/90 border-2 border-indigo-500/40 focus:border-indigo-400 rounded-2xl px-4 py-3.5 text-center text-indigo-200 font-mono text-xs font-bold tracking-widest break-all focus:outline-none shadow-inner">
         </div>
 
@@ -62,33 +62,6 @@
     </div>
 
     <script>
-        function generateRandomHex(length) {
-            const characters = '0123456789ABCDEF';
-            let result = '';
-            for (let i = 0; i < length; i++) {
-                result += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-            return result;
-        }
-
-        function loadOrCreateKey() {
-            // Kiểm tra xem trình duyệt đã lưu Key trước đó chưa
-            let savedKey = localStorage.getItem('user_bmynv_key');
-
-            // Nếu chưa có, tạo Key mới và lưu lại
-            if (!savedKey) {
-                const randomSuffix = generateRandomHex(48);
-                savedKey = `BOMAYYEUVIETNAM_${randomSuffix}`;
-                localStorage.setItem('user_bmynv_key', savedKey);
-            }
-
-            // Gán Key vào ô hiển thị
-            document.getElementById('keyInput').value = savedKey;
-        }
-
-        // Tự động kiểm tra / tải Key khi load trang
-        window.onload = loadOrCreateKey;
-
         function copyKey() {
             const keyInput = document.getElementById('keyInput');
             const btnText = document.getElementById('btnText');
